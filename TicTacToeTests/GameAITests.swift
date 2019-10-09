@@ -23,8 +23,8 @@ class GameAITests: XCTestCase {
         try! board.place(mark: .x, on: (0, 1))
         try! board.place(mark: .o, on: (1, 1))
         try! board.place(mark: .x, on: (0, 2))
-        XCTAssertTrue(game(board: board, isWonBy: .x))
-        XCTAssertFalse(game(board: board, isWonBy: .o))
+        XCTAssertTrue(checkGame(board: board, isWonBy: .x))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .o))
     }
     
     func testWinCheckingVertical2() {
@@ -39,49 +39,124 @@ class GameAITests: XCTestCase {
         try! board.place(mark: .o, on: (1, 1))
         try! board.place(mark: .x, on: (0, 1))
         try! board.place(mark: .o, on: (1, 2))
-        XCTAssertTrue(game(board: board, isWonBy: .o))
-        XCTAssertFalse(game(board: board, isWonBy: .x))
+        XCTAssertTrue(checkGame(board: board, isWonBy: .o))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .x))
     }
     
     func testWinCheckingHorizontal1() {
-        var board = GameBoard()
         /*
-         - o -
          x x x
-         o - -
+         o o -
+         - - -
          */
+        var board = GameBoard()
+        try! board.place(mark: .x, on: (0,0))
+        try! board.place(mark: .x, on: (1,0))
+        try! board.place(mark: .x, on: (2,0))
+        try! board.place(mark: .o, on: (1,1))
+        try! board.place(mark: .o, on: (2,1))
+        XCTAssertTrue(checkGame(board: board, isWonBy: .x))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .o))
     }
     
-    func testWinCheckingHorizontal2() {
-        var board = GameBoard()
+    func testWinCheckingHorizontal2 () {
         /*
-         x - -
+         x x -
+         o o o
+         - - -
+         */
+        var board = GameBoard()
+        try! board.place(mark: .x, on: (0,0))
+        try! board.place(mark: .x, on: (1,0))
+        try! board.place(mark: .o, on: (0,1))
+        try! board.place(mark: .o, on: (1,1))
+        try! board.place(mark: .o, on: (2,1))
+        XCTAssertTrue(checkGame(board: board, isWonBy: .o))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .x))
+    }
+    
+    func testWinCheckingHorizontal3 () {
+        /*
+         - x -
          - x -
          o o o
          */
+        var board = GameBoard()
+        try! board.place(mark: .x, on: (1,0))
+        try! board.place(mark: .x, on: (1,1))
+        try! board.place(mark: .o, on: (0,2))
+        try! board.place(mark: .o, on: (1,2))
+        try! board.place(mark: .o, on: (2,2))
+        XCTAssertTrue(checkGame(board: board, isWonBy: .o))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .x))
     }
     
-    func testWinCheckingDiagonal1() {
+    func testWinCheckingDiagonalLTR() {
         var board = GameBoard()
         /*
          x - -
          - x -
          o o x
          */
+        try! board.place(mark: .x, on: (0, 0))
+        try! board.place(mark: .x, on: (1, 1))
+        try! board.place(mark: .x, on: (2, 2))
+        try! board.place(mark: .o, on: (0, 2))
+        try! board.place(mark: .o, on: (1, 2))
+        XCTAssertTrue(checkGame(board: board, isWonBy: .x))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .o))
     }
     
-    func testWinCheckingDiagonal2() {
+    func testWinCheckingDiagonalRTL() {
         var board = GameBoard()
         /*
          x - o
          - o -
          o x -
          */
+        try! board.place(mark: .o, on: (2, 0))
+        try! board.place(mark: .o, on: (1, 1))
+        try! board.place(mark: .o, on: (0, 2))
+        try! board.place(mark: .x, on: (0, 0))
+        try! board.place(mark: .x, on: (1, 2))
+        XCTAssertTrue(checkGame(board: board, isWonBy: .o))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .x))
+    }
+    
+    func testCatsGame() {
+        var board = GameBoard()
+        /*
+         x o x
+         x o o
+         o x x
+         */
+        try! board.place(mark: .x, on: (0, 0))
+        try! board.place(mark: .o, on: (1, 0))
+        try! board.place(mark: .x, on: (2, 0))
+        try! board.place(mark: .x, on: (0, 1))
+        try! board.place(mark: .o, on: (1, 1))
+        try! board.place(mark: .o, on: (2, 1))
+        try! board.place(mark: .o, on: (0, 2))
+        try! board.place(mark: .x, on: (1, 2))
+        try! board.place(mark: .x, on: (2, 2))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .o))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .x))
+        XCTAssertTrue(board.isFull)
     }
     
     func testIncompleteGame() {
-    }
-
-    func testCatsGame() {
+        var board = GameBoard()
+        /*
+         x - o
+         - o -
+         - x -
+         */
+        try! board.place(mark: .x, on: (0, 0))
+        try! board.place(mark: .x, on: (2, 0))
+        try! board.place(mark: .o, on: (1, 1))
+        try! board.place(mark: .x, on: (1, 2))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .o))
+        XCTAssertFalse(checkGame(board: board, isWonBy: .x))
+        XCTAssertFalse(board.isFull)
     }
 }
