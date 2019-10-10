@@ -31,13 +31,13 @@ class TicTacToeUITests: XCTestCase {
     private enum Mark: String, Equatable {
         case x = "X"
         case o = "O"
-        case empty = ""
+        case empty = " "
         
         var turnString: String {
             switch self {
             case .x: return "Player X's turn"
             case .o: return "Player O's turn"
-            case .empty: return ""
+            case .empty: return " "
             }
         }
         
@@ -45,7 +45,7 @@ class TicTacToeUITests: XCTestCase {
             switch self {
             case .x: return "Player X won!"
             case .o: return "Player O won!"
-            case .empty: return ""
+            case .empty: return " "
             }
         }
         
@@ -114,5 +114,18 @@ class TicTacToeUITests: XCTestCase {
         button6.tap()
         XCTAssertEqual(button6.label, Mark.x.rawValue)
         XCTAssertEqual(turnLabel.label, Mark.x.winString)
+    }
+    
+    func testRestartingGame() {
+        let button4 = buttonFor(4)
+        button4.tap()
+        XCTAssertEqual(button4.label, Mark.x.rawValue)
+        XCTAssertEqual(turnLabel.label, Mark.o.turnString)
+        restartButton.tap()
+        XCTAssertEqual(turnLabel.label, Mark.x.turnString)
+        
+        for index in 0...8 {
+            XCTAssertEqual(buttonFor(index).label, Mark.empty.rawValue)
+        }
     }
 }
