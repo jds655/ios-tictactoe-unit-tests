@@ -30,9 +30,7 @@ class GameViewController: UIViewController, BoardViewControllerDelegate {
         }
         
         do {
-            //try board.place(mark: player, on: coordinate)
             try game.makeMark(at: coordinate)
-            //if checkGame(board: board, isWonBy: player) {
             if game.gameIsOver {
                 if let player = game.winningPlayer {
                     gameState = .won(player)
