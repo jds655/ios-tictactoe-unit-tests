@@ -85,7 +85,7 @@ class TicTacToeUITests: XCTestCase {
     }
 
     func testCleanLaunch() {
-        XCTAssertEqual(app/*@START_MENU_TOKEN@*/.staticTexts["GameViewControllerTurnLabel"]/*[[".staticTexts[\"Player X won!\"]",".staticTexts[\"GameViewControllerTurnLabel\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.label, "")
+        XCTAssertEqual(app/*@START_MENU_TOKEN@*/.staticTexts["GameViewControllerTurnLabel"]/*[[".staticTexts[\"Player X won!\"]",".staticTexts[\"GameViewControllerTurnLabel\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.label, Mark.x.turnString)
     }
     
     func testWinCheckingVerticle1() {

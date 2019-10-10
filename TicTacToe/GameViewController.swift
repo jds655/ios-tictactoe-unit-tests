@@ -21,6 +21,11 @@ class GameViewController: UIViewController, BoardViewControllerDelegate {
         gameState = .active(.x)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        gameState = .active(.x)
+    }
+    
     // MARK: - BoardViewControllerDelegate
     
     func boardViewController(_ boardViewController: BoardViewController, markWasMadeAt coordinate: Coordinate) {
