@@ -31,7 +31,7 @@ class TicTacToeUITests: XCTestCase {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
-        
+        let app = XCUIApplication()
         let element = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element
         let element3 = element.children(matching: .other).element(boundBy: 1).children(matching: .other).element.children(matching: .other).element
         let element2 = element3.children(matching: .other).element(boundBy: 0)
